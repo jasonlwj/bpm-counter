@@ -2,9 +2,18 @@ import React, { useState } from 'react'
 
 const BPMDisplay = ({ bpm }) => {
 	return (
-		<div>
-			<b>{bpm}</b>
-		</div>
+		<table>
+			<tbody>
+				<tr>
+					<td>Average BPM</td>
+					<td><b>{bpm}</b></td>
+				</tr>
+				<tr>
+					<td>Nearest Whole</td>
+					<td><b>{(bpm === 'First Beat') ? '' : Math.round(bpm)}</b></td>
+				</tr>
+			</tbody>
+		</table>
 	)
 }
 
@@ -14,7 +23,6 @@ const App = () => {
 	const [ bpm, setBpm ] = useState(0)
 
 	const handleTap = () => {
-		console.log('calling handleTap()')
 		if (!lastTap) {
 			setBpm('First Beat')
 		} else {
