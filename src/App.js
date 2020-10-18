@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 const BPMDisplay = ({ bpm }) => {
 	return (
 		<div>
-			<b>{bpm.toFixed(2)}</b>
+			<b>{bpm}</b>
 		</div>
 	)
 }
@@ -14,12 +14,17 @@ const App = () => {
 	const [ bpm, setBpm ] = useState(0)
 
 	const handleTap = () => {
-		if (lastTap) {
-			setIntervals(intervals.concat(new Date() - lastTap))
-			const sumIntervals = intervals.reduce((total, currentValue) => total + currentValue, 0)
+		console.log('calling handleTap()')
+		if (!lastTap) {
+			setBpm('First Beat')
+		} else {
+			const newIntervals = intervals.concat(new Date() - lastTap)
+			setIntervals(newIntervals)
 			
-			if (intervals.length > 0)
-				setBpm(60000 / (sumIntervals / intervals.length))
+			if (newIntervals.length > 0) {
+				const sumIntervals = newIntervals.reduce((total, currentValue) => total + currentValue, 0)
+				setBpm((60000 / (sumIntervals / newIntervals.length)).toFixed(2))
+			}
 		}
 
 		setLastTap(new Date())
