@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 const BPMDisplay = ({ bpm }) => {
 	return (
 		<div>
-			<b>{bpm}</b>
+			<b>{bpm.toFixed(2)}</b>
 		</div>
 	)
 }
