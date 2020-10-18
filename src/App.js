@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const BPMDisplay = ({ bpm }) => {
+	return (
+		<div>
+			<b>{bpm}</b>
+		</div>
+	)
 }
 
-export default App;
+const App = () => {
+	const [ lastTap, setLastTap ] = useState(null)
+	const [ intervals, setIntervals ] = useState([])  // intervals between taps, in milliseconds
+	const [ bpm, setBpm ] = useState(0)
+
+	const handleTap = () => {
+		if (lastTap) {
+			setIntervals(intervals.concat(new Date() - lastTap))
+			const sumIntervals = intervals.reduce((total, currentValue) => total + currentValue, 0)
+			
+			if (intervals.length > 0)
+				setBpm(60000 / (sumIntervals / intervals.length))
+		}
+
+		setLastTap(new Date())
+	}
+
+	// render
+	return (
+		<div className="App">
+			<button onClick={handleTap}>Start tapping to measure BPM</button>
+			<BPMDisplay bpm={bpm} />
+		</div>
+	)
+}
+
+export default App
