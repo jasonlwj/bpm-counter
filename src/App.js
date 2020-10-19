@@ -9,6 +9,10 @@ const App = () => {
 	const handleTap = () => {
 		if (!lastTap) {
 			setBpm('First Beat')
+		} else if (new Date() - lastTap > 2000) {
+			// reset after inactivity
+			setBpm('First Beat')
+			setIntervals([])
 		} else {
 			const newIntervals = intervals.concat(new Date() - lastTap)
 			setIntervals(newIntervals)
@@ -18,6 +22,8 @@ const App = () => {
 				setBpm((60000 / (sumIntervals / newIntervals.length)).toFixed(2))
 			}
 		}
+
+		// TODO: reset interval list after set amount of time
 
 		setLastTap(new Date())
 	}
