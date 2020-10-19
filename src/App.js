@@ -5,14 +5,16 @@ const App = () => {
 	const [ lastTap, setLastTap ] = useState(null)
 	const [ intervals, setIntervals ] = useState([])  // intervals between taps, in milliseconds
 	const [ bpm, setBpm ] = useState(0)
+	const [ resetDuration, setResetDuration ] = useState(2)
+
+	const resetCounter = message => {
+		setBpm(message)
+		setIntervals([])
+	}
 
 	const handleTap = () => {
-		if (!lastTap) {
-			setBpm('First Beat')
-		} else if (new Date() - lastTap > 2000) {
-			// reset after inactivity
-			setBpm('First Beat')
-			setIntervals([])
+		if (!lastTap || (new Date() - lastTap > resetDuration * 1000)) {
+			resetCounter('First Beat')
 		} else {
 			const newIntervals = intervals.concat(new Date() - lastTap)
 			setIntervals(newIntervals)
@@ -23,16 +25,21 @@ const App = () => {
 			}
 		}
 
-		// TODO: reset interval list after set amount of time
-
 		setLastTap(new Date())
 	}
+
+	const handleResetDurationChange = event => setResetDuration(event.target.value)
+
+	const handleClickReset = () => resetCounter('')
 
 	// render
 	return (
 		<div className="App">
 			<button onClick={handleTap}>Start tapping to measure BPM</button>
 			<BPMDisplay bpm={bpm} />
+			<div>
+				Pause <input type="number" value={resetDuration} onChange={handleResetDurationChange} /> seconds or <button onClick={handleClickReset}>RESET</button> to start again
+			</div>
 		</div>
 	)
 }
