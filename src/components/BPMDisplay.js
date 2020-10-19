@@ -10,7 +10,7 @@ const BPMDisplay = ({ bpm }) => {
 				</tr>
 				<tr>
 					<td>Nearest Whole</td>
-					<td><b>{(typeof(bpm) === 'number') ? Math.round(bpm) : ''}</b></td>
+					<td><b>{(!isNaN(bpm)) ? Math.round(bpm) : ''}</b></td>
 				</tr>
 			</tbody>
 		</table>
