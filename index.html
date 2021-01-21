@@ -1,13 +1,22 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-    <title>BPM Counter</title>
+		<title>BPM Counter</title>
+		<link rel="stylesheet" href="index.css">
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
 	</head>
 	<body>
-		<div>
-			<p class="average">0bpm</p>
-			<p class="nearestwhole">0bpm</p>
+		<div class="wrap">
+			<div class="bpmdisplay">
+				<p id="nearestwhole">0<span class="unit">BPM</span></p>
+				<p id="average">0<span class="unit">BPM</span></p>
+			</div>
+			<div>
+				<p id="message">Feels like...</p>
+			</div>
 		</div>
+		
 	</body>
 	<script type="text/javascript" src="index.js"></script>
 </html>
